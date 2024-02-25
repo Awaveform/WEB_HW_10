@@ -34,10 +34,13 @@
     {% for quote in quotes %}
     <ul>
         <li>
+        {#            {% if request.user.is_staff or is_user_owner and not quote.done %}#}
             {% if not quote.done %}
-            <a href="{% url 'quote:detail' quote.id %}" role="button" class="outline"> {{ quote.name }} </a>
-            <a href="{% url 'quote:set_done' quote.id %}" role="button"> Mark Done </a>
-            <a href="{% url 'quote:delete' quote.id %}" role="button" class="contrast"> Delete note </a>
+            <p>{{ quote.description }} by <a href="{% url 'quote:author_detail' quote.author.id %}" class="outline"> {{ quote.author.fullname }} </a></p>
+                {% if user.is_authenticated and quote.user_id == user.id %}
+                    <a href="{% url 'quote:set_done' quote.id %}" role="button"> Mark Done </a>
+                    <a href="{% url 'quote:delete' quote.id %}" role="button" class="contrast"> Delete quote </a>
+                {% endif %}
             {% else %}
             <a href="{% url 'quote:detail' quote.id %}" role="button" class="secondary"><s>{{ quote.name }}</s></a>
             {% endif %}

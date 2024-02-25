@@ -17,6 +17,15 @@
         <span>{{ form.errors.description }}</span>
     </div>
     <div style="padding: 10px">
+        <label> Select author:
+            <select name="authors" required>
+                {% for author in authors %}
+                <option value="{{author.fullname}}">{{author.fullname}}</option>
+                {% endfor %}
+            </select>
+        </label>
+    </div>
+    <div style="padding: 10px">
         <label> Select tags:
             <select name="tags" multiple="multiple" required>
                 {% for tag in tags %}
